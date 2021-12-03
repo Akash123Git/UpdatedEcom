@@ -52,7 +52,20 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	 @PostMapping("/addP")
+	@GetMapping("/checkout/{prodId}")
+	public ModelAndView fetchProductBy(@PathVariable long prodId){
+
+		ModelAndView modelAndView = new ModelAndView("BuyNowDetails");
+
+		Product product = productService.getProductById(prodId).get();
+		
+		modelAndView.addObject("product",product);
+
+		return modelAndView;
+	}
+
+
+	@PostMapping("/addP")
 	    public String saveProduct(@RequestParam("file") MultipartFile file,
 	    		@RequestParam("pname") String name,
 	    		@RequestParam("price") double price,

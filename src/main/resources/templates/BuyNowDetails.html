@@ -356,7 +356,7 @@
 
 		<div class="products">
 
-			<div class="product" style="border-radius: 5px;" th:each="product : ${allCart}">
+			<div class="product" style="border-radius: 5px;">
 
 			<div style="margin: auto; width:50%; height:100%;">
 				<img src="bag1.jpg" style="width: 100%; height: 100%;" th:src="*{'data:image/jpeg;base64,'+{product.prodImage}}" >
@@ -369,34 +369,19 @@
 
 					<h4 class="product-offer" ><span th:text="${product.prodDiscount}">40%</span><span>&#37;</span></h4>
 
-					<p class="product-quantity">Quantity: <input id="quantity" type="number" name="prodQuantity" min="1" max="100" th:value="${product.prodQuantity}" th:oninput="'javaScript:UpdateValue(this.value,' + ${product.prodId} + ');'">
-
-						<script th:inline="JavaScript">
-							function UpdateValue(quanity,prodId){
-								
-								window.location.href = "http://localhost:9191/updateQuantity/"+quanity+"/"+prodId;
-							}
-						</script>
-						<form action="#" th:action="@{/deleteFromCart}" method="post">
-							
-							<input type="hidden" name="custId" th:value="${session.id}">
-							
-							<input type="hidden" name="prodId" th:value="${product.prodId}">
-						
-						<p class="product-remove">
-							
-							<i class="fa fa-trash" aria-hidden="true">
-							
-								<span class="remove"><input type="submit" value="Remove" style="background-color: transparent; border: none; color:white;"></span>
-						
-							</i>
-						
-						</p>
-						
-						</form>
+					<p class="product-quantity">Quantity: <input id="quantity" type="number" name="prodQuantity" value="1" min="1" max="100" th:oninput="'javaScript:updateValue(this.value,' + ${product.prodPrice} + ',' + ${product.prodDiscount} + ');'">
 					
 				</div>
 
+				<script th:inline="javaScript">
+					function updateValue(val,price,discount){
+						var Total_price = (price-(price*(discount/100)))*val;
+						var savedAmount = (price*(discount/100))*val;
+						document.getElementById("numberOfItems").innerHTML = val;
+						document.getElementById("total").innerHTML = Total_price;
+						document.getElementById("saved").innerHTML = savedAmount;
+					}
+				</script>
 			</div>
 
 		</div>
@@ -407,7 +392,7 @@
 
 				<span>Total Price</span>
 
-				<span th:text="${finalAmount}"> 3,000</span>
+				<span id="total" th:text="${(product.prodPrice-(product.prodPrice*(product.prodDiscount/100)))}"> 3,000</span>
 
 			</p>
 
@@ -415,7 +400,7 @@
 
 				<span>Number of Items</span>
 
-				<span th:text="${numberOfItems}">2</span>
+				<span id="numberOfItems">1</span>
 
 			</p>
 
@@ -423,10 +408,10 @@
 
 				<span>You Save</span>
 
-				<strike><span style="color: red;" th:text="${#numbers.formatDecimal(Total,3,2,'POINT')}"> 1,000</span></strike>
+				<strike><span id="saved" style="color: red;" th:text="${#numbers.formatDecimal((product.prodPrice*(product.prodDiscount/100)),3,2,'POINT')}"> 1,000</span></strike>
 
 			</p>
-
+			
 			<a href="/checkout">Proceed to Checkout</a>
 
 		</div>

@@ -388,12 +388,22 @@
 							<i class="fa fa-trash" aria-hidden="true">
 							
 								<span class="remove"><input type="submit" value="Remove" style="background-color: transparent; border: none; color:white;"></span>
-						
+
 							</i>
 						
 						</p>
-						
+						 
 						</form>
+
+						<p class="product-remove" style="background-color: orange; margin-right: 125px;">
+							
+							<i class="trash" aria-hidden="true">
+							
+								<span class="remove"><a th:href="@{/checkout/}+${product.prodId}"><button style="background-color: transparent; border: none; color: #fff;"> Buy now </button></a></span>
+
+							</i>
+						
+						</p>
 					
 				</div>
 

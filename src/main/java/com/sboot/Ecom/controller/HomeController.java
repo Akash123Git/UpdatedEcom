@@ -150,6 +150,9 @@ public class HomeController {
 
 	@GetMapping("/dashboard")
 	public ModelAndView getdashboardPage() {
+		
+		Globaldata.tempCartProduct.clear();
+
 		ModelAndView modelAndView =new ModelAndView("dashboard");
 		
 		List<Product> allProducts=productService.getAllProducts();
@@ -244,7 +247,33 @@ public class HomeController {
 		
 		return modelAndView;
 	}
-	
+
+	@GetMapping("/buyCartItems")
+	public ModelAndView goToBilling(){
+		ModelAndView modelAndView = new ModelAndView("checkout");
+
+		Customer customer=Globaldata.customerDetails.get(0);
+		modelAndView.addObject("CustomerDetails",customer);
+		modelAndView.addObject("numberOfItems", numberOfItems);
+		modelAndView.addObject("finalAmount", finalAmount);
+
+		return modelAndView;
+	}
+
+	@GetMapping("/buyItem/{quantity}/{prod_id}")
+	public ModelAndView sendItemToBilling(@PathVariable int quantity,@PathVariable long prod_id){
+		ModelAndView modelAndView = new ModelAndView("checkout");
+
+		Customer customer=Globaldata.customerDetails.get(0);
+		Product p=productService.getProductById(prod_id).get();
+		double total=quantity*(p.getProdPrice()-(p.getProdPrice()*(p.getProdDiscount()/100)));
+		modelAndView.addObject("CustomerDetails",customer);
+		modelAndView.addObject("numberOfItems", quantity);
+		modelAndView.addObject("finalAmount", total);
+
+		return modelAndView;
+	}
+
 	@PostMapping("/addProducts")
 	public String addProducts(Product product) {
 		

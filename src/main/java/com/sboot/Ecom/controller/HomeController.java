@@ -163,6 +163,8 @@ public class HomeController {
 		
 		return modelAndView;
 	}
+
+	//New
 	
 	@GetMapping("/mycart")
 	public ModelAndView getCartPage(HttpSession session) {
@@ -208,7 +210,7 @@ public class HomeController {
 		return modelAndView;
 	}
 	
-	
+	//New
 	
 	private void getTotalOfProducts(List<CartProduct> product) {
 		
@@ -218,6 +220,8 @@ public class HomeController {
 			finalAmount=finalAmount+((p.getProdPrice()-(p.getProdPrice()*(p.getProdDiscount()/100)))*p.getProdQuantity());
 		}
 	}
+
+	//New
 
 	@GetMapping("/updateQuantity/{quantity}/{prod_id}")
 	public String getUpdatedQuantity(@PathVariable int quantity,@PathVariable long prod_id,HttpSession session ){
@@ -248,6 +252,8 @@ public class HomeController {
 		return modelAndView;
 	}
 
+	//New
+
 	@GetMapping("/buyCartItems")
 	public ModelAndView goToBilling(){
 		ModelAndView modelAndView = new ModelAndView("checkout");
@@ -259,6 +265,8 @@ public class HomeController {
 
 		return modelAndView;
 	}
+
+	//New
 
 	@GetMapping("/buyItem/{quantity}/{prod_id}")
 	public ModelAndView sendItemToBilling(@PathVariable int quantity,@PathVariable long prod_id){

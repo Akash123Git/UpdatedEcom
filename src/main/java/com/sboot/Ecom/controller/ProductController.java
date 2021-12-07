@@ -52,6 +52,8 @@ public class ProductController {
 		return modelAndView;
 	}
 	
+//New
+
 	@GetMapping("/checkout/{prodId}")
 	public ModelAndView fetchProductBy(@PathVariable long prodId){
 
